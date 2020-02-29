@@ -1,15 +1,10 @@
 <?php
-
-if(!isset($_GET['c'])){
-	require_once "controllers/inicio.controller.php";
-	$controlador = new InicioController();
-	call_user_func(array($controlador,"Inicio"));
-
+if(isset($_GET['t'])){	
+	require_once "dispatcher.php";
+	$dispatcher = new Dispatcher();
+	$dispatcher::doGet();
 }else{
-	$controlador = $_GET['c'];
-	require_once "controllers/".$controlador.".controller.php";
-	$controlador = ucwords($controlador)."Controller";
-	$controlador = new $controlador;
-	$accion = isset($_GET['a']) ? $_GET['a'] : "Inicio";
-	call_user_func(array($controlador,$accion));
+	require_once "controllers/error.controller.php";
+	$error = new ErrorController();
+	$error::UnAuthorized();
 }
